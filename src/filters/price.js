@@ -14,11 +14,11 @@ const setupPrice = (store) => {
   priceInput.max = maxPrice;
   priceInput.min = 0;
   priceInput.value = maxPrice;
-  priceValue.textContent = `value : ₹${maxPrice}`;
+  priceValue.textContent = `Price: ₹${maxPrice}`;
 
   priceInput.addEventListener("input", () => {
     const value = parseInt(priceInput.value);
-    priceValue.textContent = `value : ₹${value}`;
+    priceValue.textContent = `Price: ₹${value}`;
     let newStore = store.filter((product) => {
       return product.price <= value;
     });
