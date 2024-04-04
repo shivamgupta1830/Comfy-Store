@@ -26,11 +26,61 @@ export const addToCart = (id) => {
 
     // add items to DOM
     addToCartDOM(product);
-    
   } else {
+    const amount = increaseAmount(id);
+    const items = [...cartItemsDOM.querySelectorAll(".cart-item-amount")];
+    const newAmount = items.find((value) => {
+      value.dataset.id === id;
+    });
   }
+
+  displayCartItemCount();
+  displayCartTotal();
+  setStorageItem("cart", cart);
   openCart();
 };
+function displayCartItemCount() {
+  const amount = cart.reduce((total, cartItem) => {
+    return (total += cartItem.amount);
+  }, 0);
+  cartItemCountDOM.textContent = amount;
+}
 
-const init = () => {};
+function displayCartTotal() {
+  let total = cart.reduce((total, cartItem) => {
+    return (total += cartItem.price * cartItem.amount);
+  }, 0);
+  cartTotalDOM.textContent = `Total: ₹${total}`;
+}
+
+function displayCartItemsDOM() {
+  cart.forEach((cartItem) => {
+    addToCartDOM(cartItem);
+  });
+}
+
+function increaseAmount(id) {
+  let newAmount;
+  cart = cart.map((cartItem) => {
+    if (cartItem.id === id) {
+      newAmount = cartItem.amount + 1;
+      cartItem = { ...cartItem, amount: newAmount };
+    }
+    return cartItem;
+  });
+  return newAmount;
+}
+
+function setupCartFunctionality() {}
+
+const init = () => {
+  //display amount of cart items
+  displayCartItemCount();
+  //display total
+  displayCartTotal();
+  // add all cart items to th dom
+  displayCartItemsDOM();
+  //setup cart functionality
+  setupCartFunctionality();
+};
 init();
